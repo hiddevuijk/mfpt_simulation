@@ -91,7 +91,7 @@ int main(int argc, char *argv[])
 		normalize(p);
 
 		// get FPT and save in T[i]
-		T[i]= fpt(r,dr,p,dp,deriv,dt,a,R);
+		T[i]= fpt_inner(r,dr,p,dp,deriv,dt,a,R);
 
 		// if T[i] == 0, the particle was placed outside the
 		// outer boundary due to a numerical error.
