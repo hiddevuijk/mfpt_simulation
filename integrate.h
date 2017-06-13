@@ -15,7 +15,7 @@
 // boundary.
 // With a reflecting outer boundary (radius R) and 
 // an absorbing inner boundary (radius a).
-double fpt(std::vector<double>& r,std::vector<double>& dr,
+double fpt_inner(std::vector<double>& r,std::vector<double>& dr,
 		std::vector<double>& p, std::vector<double>& dp,
 		Deriv& deriv,double dt,double a,double R)
 {
@@ -62,6 +62,42 @@ double fpt(std::vector<double>& r,std::vector<double>& dr,
 	return t;
 
 }
+
+
+// Calculate the first passage time of passing 
+// through eihter the outer or inner boundary
+// returns a double array with first the 
+// time and second the boudary it passed (0 for
+// the inner boundary, 1 for the outer)
+double fpt_both(std::vector<double>& r,std::vector<double>& dr,
+		std::vector<double>& p, std::vector<double>& dp,
+		Deriv& deriv,double dt,double a,double R)
+{
+	
+	double t[2] = {0,0} ;	// first passage time, and boundary
+	double l = len_vec(r);	// particle distance from origin
+
+	// let particle diffuse until it hits the inner boundary
+	while(l > a and l < R) {
+		// calculate new position
+		deriv(r,dr,p,dp,dt);
+		add_to(r,dr);
+		add_to(p,dp);
+
+		// new dist. from origin
+		l = len_vec(r);
+
+		// normalize p to 1
+		normalize(p);
+
+		t[0] += dt;
+	}
+	if( l > R ) t[1] = 1;
+	// return total time before absorbtion on inner boundary
+	return t;
+
+}
+
 
 
 
