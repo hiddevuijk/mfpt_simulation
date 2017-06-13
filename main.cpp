@@ -85,7 +85,6 @@ int main(int argc, char *argv[])
 		r[2] = 1.*rand();
 		normalize(r,R0);
 
-		vector<double> p(3);
 		p[0] = 1.*rand();
 		p[1] = 1.*rand();
 		p[2] = 1.*rand();
