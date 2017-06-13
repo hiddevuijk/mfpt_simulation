@@ -73,7 +73,7 @@ int main(int argc, char *argv[])
 
 	// object for steps, increments r and p with the calculated
 	// dr and dp. Relfects particle if it hits the outer boundary.
-	Deriv deriv(Dt,Dr,c,d,a,R,ndist,generator);
+	Deriv deriv(Dt,Dr,c,d,ndist,generator);
 
 	// results first passage times	
 	vector<double> T(N);
@@ -91,7 +91,7 @@ int main(int argc, char *argv[])
 		normalize(p);
 
 		// get FPT and save in T[i]
-		T[i]= fpt(r,dr,p,dp,deriv,dt);
+		T[i]= fpt(r,dr,p,dp,deriv,dt,a,R);
 
 		// if T[i] == 0, the particle was placed outside the
 		// outer boundary due to a numerical error.
