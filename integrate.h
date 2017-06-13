@@ -69,13 +69,13 @@ double fpt_inner(std::vector<double>& r,std::vector<double>& dr,
 // returns a double array with first the 
 // time and second the boudary it passed (0 for
 // the inner boundary, 1 for the outer)
-double fpt_both(std::vector<double>& r,std::vector<double>& dr,
+std::vector<double> fpt_both(std::vector<double>& r,std::vector<double>& dr,
 		std::vector<double>& p, std::vector<double>& dp,
 		Deriv& deriv,double dt,double a,double R)
 {
 	
-	double t[2] = {0,0} ;	// first passage time, and boundary
-	double l = len_vec(r);	// particle distance from origin
+	std::vector<double> t(2,0.0) ;	// first passage time, and boundary
+	double l = len_vec(r);		// particle distance from origin
 
 	// let particle diffuse until it hits the inner boundary
 	while(l > a and l < R) {
