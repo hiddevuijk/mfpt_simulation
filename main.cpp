@@ -20,13 +20,14 @@ int main(int argc, char *argv[])
 	// Dr: rotational diff. const
 	// Dt: translational diff. const
 	// c: strength of the activity field
+	// avg: if true, averaged activity is used
 	// d: strength of the torque (negtive aligns with grad. v0)
 	// a: inner radius (absorbing boundary)
 	// R: outer radius (reflecting boundary)
 	// dt: step size of integration
 	// N: number of trails
 	// seed: seed for the random nuber generators
-	double R0,Dr,Dt,c,d,a,R,dt;
+	double R0,Dr,Dt,c,vavg,d,a,R,dt;
 	int N;
 	int seed;
 
@@ -42,7 +43,7 @@ int main(int argc, char *argv[])
 	}
 
 	// read variables from input file
-	read_variables(R0,Dr,Dt,c,d,a,R,dt,N,seed,name,input_name);
+	read_variables(R0,Dr,Dt,c,vavg,d,a,R,dt,N,seed,name,input_name);
 
 	// random number generator for init. values
 	srand(seed);
@@ -73,7 +74,7 @@ int main(int argc, char *argv[])
 
 	// object for steps, increments r and p with the calculated
 	// dr and dp. Relfects particle if it hits the outer boundary.
-	Deriv deriv(Dt,Dr,c,d,ndist,generator);
+	Deriv deriv(Dt,Dr,c,vavg,d,ndist,generator);
 
 	// results first passage times	
 	vector<double> T(N);
@@ -89,7 +90,7 @@ int main(int argc, char *argv[])
 		p[1] = 1.*rand();
 		p[2] = 1.*rand();
 		normalize(p);
-
+	
 		// get FPT and save in T[i]
 		T[i]= fpt_inner(r,dr,p,dp,deriv,dt,a,R);
 

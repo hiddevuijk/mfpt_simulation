@@ -4,7 +4,7 @@
 #include <string>
 #include <fstream>
 
-void read_variables(double& r0, double& Dr,double& Dt, double& c, int& avg,
+void read_variables(double& r0, double& Dr,double& Dt, double& c, double& vavg,
 		double& d, double& a, double& R,double& dt, int& N, int& seed,
 		std::string& name, std::string fileName)
 {
@@ -20,7 +20,7 @@ void read_variables(double& r0, double& Dr,double& Dt, double& c, int& avg,
 	infile >>temp;
 	infile >> c;
 	infile >>temp;
-	infile >> avg;
+	infile >> vavg;
 	infile >>temp;
 	infile >> d;
 	infile >>temp;
