@@ -1,3 +1,5 @@
+mfpt=
+1
 r0=
 49.99
 Dr=
@@ -17,9 +19,9 @@ R=
 dt=
 0.01
 N=
-100
+10
 seed=
 123456789
 name=
-data_test.dat
+data_test
 

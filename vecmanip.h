@@ -101,6 +101,20 @@ void write_vec(std::vector<double> v,std::string fileName, int N = 0)
 }
 
 
+// write vector to a file named fileName.
+// writes values separated by newline
+// write N values, default N = v.size()
+void write_vec(std::vector<int> v,std::string fileName, int N = 0)
+{
+	if(N==0) N = v.size();
+	std::ofstream out;
+	out.open(fileName);
+	for(int i=0;i<N;++i)
+		out<<v[i] << '\n';
+}
+
+
+
 
 
 

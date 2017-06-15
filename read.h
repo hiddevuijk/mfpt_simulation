@@ -4,13 +4,15 @@
 #include <string>
 #include <fstream>
 
-void read_variables(double& r0, double& Dr,double& Dt, double& c, double& vavg,
+void read_variables(int& mfpt, double& r0, double& Dr,double& Dt, double& c, double& vavg,
 		double& d, double& a, double& R,double& dt, int& N, int& seed,
 		std::string& name, std::string fileName)
 {
 	std::string temp;
 	std::ifstream infile(fileName);
 
+	infile >>temp;
+	infile >> mfpt;
 	infile >>temp;
 	infile >> r0;
 	infile >>temp;
