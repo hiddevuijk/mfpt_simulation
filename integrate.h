@@ -29,10 +29,13 @@ double fpt_inner(std::vector<double>& r,std::vector<double>& dr,
 		add_to(r,dr);
 		add_to(p,dp);
 
+		// normalize p to 1
+		normalize(p);
+
 		// new dist. from origin
 		l = len_vec(r);
 
-		// if l > R the particle is ouside the outer
+		// If l > R, the particle is ouside the outer
 		// boundary: reflect the particle s.t. l < R
 		if (l > R) {
 			// undo last increment
@@ -42,19 +45,16 @@ double fpt_inner(std::vector<double>& r,std::vector<double>& dr,
 			// new length
 			l = len_vec(r);
 
-			// if l>R, an numerical error has occured 
+			// If l>R, an numerical error has occured 
 			// during the reflection: the particle is
 			// still outside the outer boundary.
-			// stop this run and return t=0 to signal
+			// Stop this run and return t=0 to signal
 			// the error
 			if(l>R){
 				t = 0;
 				break;
 			}
 		}
-
-		// normalize p to 1
-		normalize(p);
 
 		t += dt;
 	}

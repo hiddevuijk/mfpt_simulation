@@ -3,7 +3,9 @@
 
 #include <string>
 #include <fstream>
+#include <iostream>
 
+using namespace std;
 void read_variables(int& mfpt, double& r0, double& Dr,double& Dt, double& c, double& vavg,
 		double& d, double& a, double& R,double& dt, int& N, int& seed,
 		std::string& name, std::string fileName)

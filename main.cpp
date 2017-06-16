@@ -43,7 +43,6 @@ int main(int argc, char *argv[])
 	}
 	// read variables from input file
 	read_variables(mfpt,R0,Dr,Dt,c,vavg,d,a,R,dt,N,seed,name,input_name);
-
 	// random number generator for init. values
 	srand(seed);
 
@@ -74,7 +73,6 @@ int main(int argc, char *argv[])
 	// object for steps, increments r and p with the calculated
 	// dr and dp. Relfects particle if it hits the outer boundary.
 	Deriv deriv(Dt,Dr,c,vavg,d,ndist,generator);
-
 	if(mfpt == 1) {
 		// results first passage times	
 		vector<double> T(N);

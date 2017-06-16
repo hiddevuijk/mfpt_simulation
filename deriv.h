@@ -12,7 +12,7 @@
 #include <vector>
 #include <random>
 #include <iostream>
-
+#include <assert.h>
 struct Deriv {
 	public:
 
@@ -28,12 +28,13 @@ struct Deriv {
 
 	double get_d(){ return d;}
 	double get_c(){ return c;}
+	double get_vavg() {return vavg;}
 
 	private:
 	double sqrt_2Dt;	// sqrt(2*Dt)
 	double sqrt_2Dr;	// sqrt(2*Dr)
 	double c;		// strength of the activity field
-	double vavg;
+	double vavg;		// if vavg =! 0, const. activity of v0 = vavg is used 
 	double d;		// strength of the torque (neg. is aligning w. grad. v0)
 
 	// radial dependent activity, and its radial derivative
@@ -57,7 +58,7 @@ void Deriv::operator() (const std::vector<double>& r, std::vector<double>& dr,
 		double l = len_vec(r);
 		double v0 = v(l);
 
-		// claculate r increment
+		// calculate r increment
 		dr[0] = v0*p[0]*dt + ndist(generator)*sqrt_dt*sqrt_2Dt;
 		dr[1] = v0*p[1]*dt + ndist(generator)*sqrt_dt*sqrt_2Dt;
 		dr[2] = v0*p[2]*dt + ndist(generator)*sqrt_dt*sqrt_2Dt;
@@ -74,7 +75,6 @@ void Deriv::operator() (const std::vector<double>& r, std::vector<double>& dr,
 		// add torque
 		if(std::fabs(d) >  1.e-10) { 
 			double dvdr0 = dvdr(l);
-
 			// rx,ry,rz is the unit vector in the direct of the vector r
 			double phi = std::atan2(r[1],r[0]);
 			double theta = std::acos(r[2]/l);
@@ -87,10 +87,10 @@ void Deriv::operator() (const std::vector<double>& r, std::vector<double>& dr,
 			dp[1] += dt*d*dvdr0*(-p[0]*p[1]*rx - (p[0]*p[0]+p[2]*p[2])*ry + p[1]*p[2]*rz);
 			dp[2] += dt*d*dvdr0*(p[0]*p[2]*rx + p[1]*p[2]*ry - (p[0]*p[0]+p[2]*p[2])*rz);
 		}
+		
 	} else {
 		double sqrt_dt = std::sqrt(dt);
 		double etaX, etaY, etaZ;
-		double l = len_vec(r);
 		double v0 = vavg;
 
 		// claculate r increment
