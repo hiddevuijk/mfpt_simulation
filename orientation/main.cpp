@@ -54,7 +54,7 @@ int main(int argc, char *argv[])
 	r[2] = 1.*rand();
 	normalize(r,R0);
 
-	// oriantation vecor p
+	// orientation vecor p
 	// init with rand values and normalize to 1.
 	vector<double> p(3);
 	p[0] = 1.*rand();
@@ -78,6 +78,7 @@ int main(int argc, char *argv[])
 	vector<double> position(N,0.);
 	int i = 0; // index of orientation
 	double l; // length of r
+
 	while(i < N){
 		// restart with random r and p vector
 		r[0] = 1.*rand();
@@ -125,9 +126,42 @@ int main(int argc, char *argv[])
 		}
 	}
 	i--;
+
+
+	// process data
+	int nbin = 100;
+	double binsize = (R-a)/(nbin-1);
+	vector<double> xbin(nbin);
+
+	for( int j=0;j<nbin;j++) 
+		xbin[j] = a+j*binsize;
+	vector<double> ysum(nbin);
+	vector<double> yn(nbin);
+
+	for(int j=0;j<i;j++) {
+		int xi = 0;
+		while(xbin[xi]<position[j]) {
+			xi += 1;
+			if( xi >= nbin) 
+				break;
+		}
+		if( xi > 0)
+			xi -=1;
+		ysum[xi] += orientation[j];
+		yn[xi] += 1.;
+	}
+
+	for(int j=0;j<nbin;j++) {
+		xbin[j] += 0.5*binsize;
+		if(yn[j] > 0.)
+			ysum[j] /= yn[j];
+			
+	}
+
 	// write orientation vec
-	write_vec(orientation,"orientation.dat",i);
-	write_vec(position,"position.dat",i);
+	write_vec(ysum,"y.dat",nbin-1);
+	write_vec(yn,"yn.dat",nbin-1);
+	write_vec(xbin,"x.dat",nbin-1);
 	return 0;
 
 }
